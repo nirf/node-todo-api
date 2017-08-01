@@ -1,12 +1,11 @@
 var mongoose = require('mongoose')
 
-const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/TodoApp'
 //setting mongoose to use promise
 mongoose.Promise = global.Promise
-mongoose.connect(mongoUri, {
+mongoose.connect(process.env.MONGODB_URI, {
     useMongoClient: true
 }, () => {
-    console.log(`Connected to mongo on ${mongoUri}`)
+    console.log(`Connected to mongo on ${process.env.MONGODB_URI}`)
 })
 
 module.exports = {
