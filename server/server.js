@@ -1,13 +1,14 @@
+require('./config/config')
+
 const _ = require('lodash')
-let express = require('express')
-let bodyParser = require('body-parser')
+const express = require('express')
+const bodyParser = require('body-parser')
 const {ObjectID} = require('mongodb')
 
-require('./config/config')
 let {mongoose} = require('./db/mongoose')
 let {Todo} = require('./models/todo')
 let {User} = require('./models/user')
-
+let {authenticate} = require('./middleware/authenticate')
 
 const PORT = process.env.PORT
 
@@ -109,6 +110,11 @@ app.post('/users', (req, res) => {
         res.status(400).send(e)
     })
 })
+
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user)
+})
+
 app.listen(PORT, () => {
     console.log(`Started on port ${PORT}`)
 })
