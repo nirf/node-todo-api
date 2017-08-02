@@ -3,7 +3,7 @@ const {mongoose} = require('./../server/db/mongoose')
 const {Todo} = require('./../server/models/todo')
 const {User} = require('./../server/models/user')
 
-var userId = '597cb0c6909a0f304d135339'
+let userId = '597cb0c6909a0f304d135339'
 
 User.findById(userId).then((user) => {
     if (!user) {
@@ -14,7 +14,7 @@ User.findById(userId).then((user) => {
     console.log(e)
 })
 
-// var id = '597f61bc7c1d6c3497e632de11'
+// let id = '597f61bc7c1d6c3497e632de11'
 //
 // if (!ObjectID.isValid(id)) {
 //     console.log('ID not valid')

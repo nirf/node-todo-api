@@ -1,24 +1,24 @@
 const _ = require('lodash')
-var express = require('express')
-var bodyParser = require('body-parser')
+let express = require('express')
+let bodyParser = require('body-parser')
 const {ObjectID} = require('mongodb')
 
 require('./config/config')
-var {mongoose} = require('./db/mongoose')
-var {Todo} = require('./models/todo')
-var {User} = require('./models/user')
+let {mongoose} = require('./db/mongoose')
+let {Todo} = require('./models/todo')
+let {User} = require('./models/user')
 
 
 const PORT = process.env.PORT
 
-var app = express()
+let app = express()
 
 //setting middleware
 //from json string to object
 app.use(bodyParser.json())
 
 app.post('/todos', (req, res) => {
-    var todo = new Todo({
+    let todo = new Todo({
         text: req.body.text
     })
     todo.save().then((doc) => {
@@ -37,7 +37,7 @@ app.get('/todos', (req, res) => {
 })
 
 app.get('/todos/:id', (req, res) => {
-    var id = req.params.id
+    let id = req.params.id
     if (!ObjectID.isValid(id)) {
         return res.status(404).send()
     }
@@ -52,7 +52,7 @@ app.get('/todos/:id', (req, res) => {
 })
 
 app.delete('/todos/:id', (req, res) => {
-    var id = req.params.id
+    let id = req.params.id
     if (!ObjectID.isValid(id)) {
         return res.status(404).send()
     }
@@ -69,8 +69,8 @@ app.delete('/todos/:id', (req, res) => {
 })
 
 app.patch('/todos/:id', (req, res) => {
-    var id = req.params.id
-    var body = _.pick(req.body, ['text', 'completed'])
+    let id = req.params.id
+    let body = _.pick(req.body, ['text', 'completed'])
 
     if (!ObjectID.isValid(id)) {
         return res.status(404).send()
@@ -97,7 +97,18 @@ app.patch('/todos/:id', (req, res) => {
     })
 })
 
+app.post('/users', (req, res) => {
+    let body = _.pick(req.body, ['email', 'password'])
+    let user = new User(body)
 
+    user.save().then(() => {
+        return user.generateAuthToken()
+    }).then((token) => {
+        res.header('x-auth', token).send(user)
+    }).catch((e) => {
+        res.status(400).send(e)
+    })
+})
 app.listen(PORT, () => {
     console.log(`Started on port ${PORT}`)
 })

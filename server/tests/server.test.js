@@ -25,7 +25,7 @@ beforeEach((done) => {
 })
 describe('POST /todos', () => {
     it('should create a new todo', (done) => {
-        var text = 'Some todo text'
+        let text = 'Some todo text'
 
         request(app)
             .post('/todos')
@@ -91,7 +91,7 @@ describe('GET /todos/:id', () => {
     })
 
     it('should return 404 if todo not found', (done) => {
-        var hexId = new ObjectID().toHexString()
+        let hexId = new ObjectID().toHexString()
         request(app)
             .get(`/todos/${hexId}`)
             .expect(404)
@@ -99,7 +99,7 @@ describe('GET /todos/:id', () => {
     })
 
     it('should return 404 for non object ids', (done) => {
-        var id = '1234'
+        let id = '1234'
         request(app)
             .get(`/todos/${id}`)
             .expect(404)
@@ -109,7 +109,7 @@ describe('GET /todos/:id', () => {
 
 describe('DELETE /todos/:id', () => {
     it('should delete todo doc', (done) => {
-        var hexId = todos[1]._id.toHexString()
+        let hexId = todos[1]._id.toHexString()
         request(app)
             .delete(`/todos/${hexId}`)
             .expect(200)
@@ -129,7 +129,7 @@ describe('DELETE /todos/:id', () => {
     })
 
     it('should return 404 if todo not found', (done) => {
-        var hexId = new ObjectID().toHexString()
+        let hexId = new ObjectID().toHexString()
         request(app)
             .delete(`/todos/${hexId}`)
             .expect(404)
@@ -137,7 +137,7 @@ describe('DELETE /todos/:id', () => {
     })
 
     it('should return 404 if object id is invalid', (done) => {
-        var id = '1234'
+        let id = '1234'
         request(app)
             .delete(`/todos/${id}`)
             .expect(404)
@@ -147,8 +147,8 @@ describe('DELETE /todos/:id', () => {
 
 describe('PATCH /todos/:id', () => {
     it('should update the todo', (done) => {
-        var hexId = todos[0]._id.toHexString()
-        var todoUpdate = {
+        let hexId = todos[0]._id.toHexString()
+        let todoUpdate = {
             text: 'updated text',
             completed: true
         }
@@ -175,8 +175,8 @@ describe('PATCH /todos/:id', () => {
     })
 
     it('should clear completedAt when todo is not completed', (done) => {
-        var hexId = todos[1]._id.toHexString()
-        var todoUpdate = {
+        let hexId = todos[1]._id.toHexString()
+        let todoUpdate = {
             completed: false,
             text: 'bla'
         }
