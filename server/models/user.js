@@ -45,7 +45,7 @@ UserSchema.methods.toJSON = function () {
 UserSchema.methods.generateAuthToken = function () {
     let user = this
     let access = 'auth'
-    let token = jwt.sign({_id: user._id.toHexString(), access}, 'secret').toString()
+    let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.JWT_SECRET).toString()
 
     user.tokens.push({access, token})
     //return the token in the promise - without return the token is not defined
@@ -68,7 +68,7 @@ UserSchema.statics.findByToken = function (token) {
     let decoded
 
     try {
-        decoded = jwt.verify(token, 'secret')
+        decoded = jwt.verify(token, process.env.JWT_SECRET)
     } catch (e) {
         return Promise.reject()
     }
