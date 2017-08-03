@@ -23,6 +23,12 @@ beforeEach((done) => {
         return Todo.insertMany(todos)
     }).then(() => done())
 })
+
+describe('SANITY', () => {
+    it('should expect 1 to 1', () => {
+        expect(1).toBe(0)
+    })
+})
 describe('POST /todos', () => {
     it('should create a new todo', (done) => {
         let text = 'Some todo text'
