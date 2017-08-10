@@ -4,7 +4,7 @@ const _ = require('lodash')
 const express = require('express')
 const bodyParser = require('body-parser')
 const {ObjectID} = require('mongodb')
-
+let {mongoose} = require('./db/mongoose')
 let {Todo} = require('./models/todo')
 let {User} = require('./models/user')
 let {authenticate} = require('./middleware/authenticate')
